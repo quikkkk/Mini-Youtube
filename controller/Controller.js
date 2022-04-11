@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models/UserModel')
 const Image = require('../models/ImageModel')
 const jwt = require('jsonwebtoken')
 const { KEY } = require('../MiddleWare/config/KEY')
