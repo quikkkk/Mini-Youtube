@@ -1,7 +1,10 @@
 const User = require('../models/User')
+const Image = require('../models/ImageModel')
 const jwt = require('jsonwebtoken')
 const { KEY } = require('../MiddleWare/config/KEY')
 const bcrypt = require('bcrypt')
+const fs = require('fs')
+const path = require('path')
 
 const generaetAccessToken = (id, email, username) => {
  const payload = { id, email, username }
@@ -91,10 +94,19 @@ class Controller {
   }
  }
 
- async UploadVideo (req, res) {
+ async UploadImage (req, res) {
   try {
-   if (!req.file) return res.json({ message: 'You should upload video', status: false })
+   if (!req.file) return res.json({ message: 'You should upload image', status: false })
 
+   const payload = {
+    image: {
+     data: fs.readFileSync(path.join(__dirname + '/../upload/image/' + req.file.filename)),
+     contentType: 'image/jpg' || 'image/png' || 'image/svg'
+    }
+   }
+
+   const image = new Image({ image: payload.image })
+   await image.save()
    res.json({ message: 'Single file uploaded successfully!', status: true })
   } catch (e) {
    throw e;
