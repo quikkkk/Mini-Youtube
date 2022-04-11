@@ -2,14 +2,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const router = require('./router/router')
-const fileUpload = require('express-fileupload')
 
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3005
 const app = express()
 
-app.use(fileUpload({ createParentPath: true }))
 app.use(cors())
 app.use(express.json())
 app.use('/api', router)

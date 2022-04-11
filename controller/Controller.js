@@ -9,6 +9,7 @@ const generaetAccessToken = (id, email, username) => {
  return jwt.sign(payload, KEY, { expiresIn: '24h' })
 }
 
+
 class Controller {
 
  async Registration (req, res) {
@@ -85,6 +86,16 @@ class Controller {
   try {
    const user = await User.find()
    return res.json({ user })
+  } catch (e) {
+   throw e;
+  }
+ }
+
+ async UploadVideo (req, res) {
+  try {
+   if (!req.file) return res.json({ message: 'You should upload video', status: false })
+
+   res.json({ message: 'Single file uploaded successfully!', status: true })
   } catch (e) {
    throw e;
   }
